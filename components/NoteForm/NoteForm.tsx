@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { type Note } from '../../types/note';
 import css from './NoteForm.module.css';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createNote, type CreateNoteTodo } from '../../services/noteService';
+import { createNote, type CreateNoteTodo } from '@/lib/api'; // це колишня папка services
 import { useState } from 'react';
 
 export interface NoteFormValues {

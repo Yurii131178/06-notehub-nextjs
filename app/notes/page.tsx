@@ -1,17 +1,12 @@
 import { useState } from 'react';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import css from './App.module.css';
-import SearchBox from '../SearchBox/SearchBox';
-import Pagination from '../Pagination/Pagination';
-import NoteList from '../NoteList/NoteList';
-import NoteModal from '../NoteModal/NoteModal';
-import {
-  fetchNotes,
-  type FetchNotesResponse,
-} from '../../services/noteService';
+import SearchBox from '@/components/SearchBox/SearchBox';
+import Pagination from '@/components/Pagination/Pagination';
+import NoteList from '@/components/NoteList/NoteList';
+import NoteModal from '@/components/NoteModal/NoteModal';
+import { fetchNotes, type FetchNotesResponse } from '@/lib/api';
 import { useDebounce } from 'use-debounce';
-import Loader from '../Loader/Loader';
-import Error from '../Error/Error';
 
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,10 +19,7 @@ export default function App() {
     setPage(1);
   };
 
-  const { data, isLoading, isError, error } = useQuery<
-    FetchNotesResponse,
-    Error
-  >({
+  const { data } = useQuery<FetchNotesResponse, Error>({
     queryKey: ['notes', debouncedSearch, page],
     queryFn: () => fetchNotes(debouncedSearch, page),
     placeholderData: keepPreviousData,
@@ -49,10 +41,6 @@ export default function App() {
         </button>
       </header>
 
-      {isLoading && <Loader />}
-      {isError && (
-        <Error message={error?.message || 'An unknown error occurred'} />
-      )}
       {data && data.notes && data.notes.length > 0 ? (
         <NoteList notes={data.notes} />
       ) : (
