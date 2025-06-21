@@ -1,25 +1,17 @@
-// const NoteDetails = () => {
-//   return <div>Note details page works!</div>;
-// };
-
-// export default NoteDetails;
-
-/////////
-
 import {
   QueryClient,
   HydrationBoundary,
   dehydrate,
 } from '@tanstack/react-query';
-import NoteDetailsClient from '../NoteDetails.client'; // якщо ти в [id]/page.tsx
+import NoteDetailsClient from '../NoteDetails.client';
 import { fetchNoteById } from '@/lib/api';
 
 type Props = {
-  params: { id: string }; // ✅ виправлено
+  params: { id: string };
 };
 
 const NoteDetails = async ({ params }: Props) => {
-  const { id } = params; // ✅ без await
+  const { id } = params;
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
