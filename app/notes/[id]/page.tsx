@@ -6,14 +6,11 @@ import {
 import NoteDetailsClient from '../NoteDetails.client';
 import { fetchNoteById } from '@/lib/api';
 
-// Тип для page-параметрів
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
-
-const NoteDetails = async ({ params }: PageProps) => {
+export default async function NoteDetails({
+  params,
+}: {
+  params: { id: string };
+}) {
   const id = params.id;
   const queryClient = new QueryClient();
 
@@ -27,6 +24,4 @@ const NoteDetails = async ({ params }: PageProps) => {
       <NoteDetailsClient />
     </HydrationBoundary>
   );
-};
-
-export default NoteDetails;
+}
