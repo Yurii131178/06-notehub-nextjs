@@ -9,9 +9,9 @@ import { fetchNoteById } from '@/lib/api';
 export default async function NoteDetails({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = params;
+  const { id } = await params; // ← зверни увагу на await
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
