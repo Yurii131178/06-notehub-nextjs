@@ -10,8 +10,8 @@
 .loader {
   width: 48px;
   height: 48px;
-  border: 5px solid #000000;
-  border-top: 5px solid grey;
+  border: 5px solid #f8f9fa;
+  border-top: 5px solid #dc3545;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
