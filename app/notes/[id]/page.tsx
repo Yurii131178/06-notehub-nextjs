@@ -1,5 +1,5 @@
 const NoteDetailsPage = () => {
-  return <div>Note details</div>; // або що завгодно
+  return <div>Note details page works!</div>;
 };
 
 export default NoteDetailsPage;
