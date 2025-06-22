@@ -9,14 +9,16 @@ import { fetchNotes } from '@/lib/api';
 const NotesPage = async () => {
   const queryClient = new QueryClient();
 
+  const initialNotes = await fetchNotes('', 1);
+
   await queryClient.prefetchQuery({
     queryKey: ['notes', '', 1],
-    queryFn: () => fetchNotes('', 1),
+    queryFn: () => Promise.resolve(initialNotes),
   });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <NotesClient />
+      <NotesClient initialNotes={initialNotes} />
     </HydrationBoundary>
   );
 };

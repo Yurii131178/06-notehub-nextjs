@@ -10,7 +10,11 @@ import NoteModal from '@/components/NoteModal/NoteModal';
 import { fetchNotes, type FetchNotesResponse } from '@/lib/api';
 import { useDebounce } from 'use-debounce';
 
-export default function NotesClient() {
+interface NotesClientProps {
+  initialNotes: FetchNotesResponse;
+}
+
+export default function NotesClient({ initialNotes }: NotesClientProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
@@ -25,6 +29,8 @@ export default function NotesClient() {
     queryKey: ['notes', debouncedSearch, page],
     queryFn: () => fetchNotes(debouncedSearch, page),
     placeholderData: keepPreviousData,
+    initialData:
+      page === 1 && debouncedSearch === '' ? initialNotes : undefined,
   });
 
   if (isLoading) {
