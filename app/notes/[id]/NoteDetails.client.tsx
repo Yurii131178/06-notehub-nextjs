@@ -1,15 +1,14 @@
 'use client';
 
-import { useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { fetchNoteById } from '@/lib/api';
 import css from './NoteDetails.module.css';
 
-export default function NoteDetailsClient() {
-  const { id } = useParams();
+interface NoteDetailsClientProps {
+  noteId: number;
+}
 
-  const noteId = Number(id);
-
+export default function NoteDetailsClient({ noteId }: NoteDetailsClientProps) {
   const {
     data: note,
     isLoading,
@@ -42,7 +41,7 @@ export default function NoteDetailsClient() {
         </div>
         <p className={css.content}>{note.content}</p>
         <p className={css.date}>
-          {new Date(note.createdAt).toLocaleDateString()}
+          {new Date(note.createdAt).toLocaleDateString('en-GB')}
         </p>
       </div>
     </div>
