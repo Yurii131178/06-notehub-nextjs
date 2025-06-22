@@ -59,7 +59,7 @@ export const deleteNote = async (id: number): Promise<Note> => {
   return response.data;
 };
 
-export const fetchNoteById = async (id: string): Promise<Note> => {
+export const fetchNoteById = async (id: number): Promise<Note> => {
   const response: AxiosResponse<Note> = await axiosInstance.get(`/${id}`);
   return response.data;
 };

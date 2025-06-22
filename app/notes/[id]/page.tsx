@@ -9,14 +9,19 @@ import { fetchNoteById } from '@/lib/api';
 export default async function NoteDetails({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = await params; // ← зверни увагу на await
+  const noteId = Number(params.id);
+
+  if (isNaN(noteId)) {
+    throw new Error('Invalid note id');
+  }
+
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ['note', id],
-    queryFn: () => fetchNoteById(id),
+    queryKey: ['note', noteId],
+    queryFn: () => fetchNoteById(noteId),
   });
 
   return (
