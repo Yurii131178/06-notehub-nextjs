@@ -22,7 +22,7 @@ export default function NotesClient() {
   };
 
   const { data, isLoading, error } = useQuery<FetchNotesResponse, Error>({
-    queryKey: ['notes', debouncedSearch, page], // Ключ запиту (має відповідати prefetchQuery)
+    queryKey: ['notes', debouncedSearch, page],
     queryFn: () => fetchNotes(debouncedSearch, page),
     placeholderData: keepPreviousData,
   });
@@ -52,11 +52,10 @@ export default function NotesClient() {
         </button>
       </header>
 
-      {/* Перевіряємо, чи є дані та нотатки, перш ніж рендерити NoteList */}
       {data?.notes?.length ? (
         <NoteList notes={data.notes} />
       ) : (
-        <p>No notes found.</p> // Можна додати іншу розмітку, якщо нотаток немає
+        <p>No notes found.</p>
       )}
 
       {isModalOpen && <NoteModal onClose={() => setIsModalOpen(false)} />}
