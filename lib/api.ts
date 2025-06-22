@@ -4,6 +4,10 @@ import { Note } from '@/types/note';
 const BASE_URL = 'https://notehub-public.goit.study/api/notes';
 const TOKEN = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 
+if (!TOKEN) {
+  throw new Error('❌NEXT_PUBLIC_NOTEHUB_TOKEN is not defined❌');
+}
+
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
@@ -31,10 +35,11 @@ export type CreateNoteTodo = {
 export const fetchNotes = async (
   search: string,
   page: number,
+  perPage: number = 12,
 ): Promise<FetchNotesResponse> => {
   const params: FetchNotesParams = {
     page,
-    perPage: 12,
+    perPage,
     search: search || undefined,
   };
   const response: AxiosResponse<FetchNotesResponse> = await axiosInstance.get(
