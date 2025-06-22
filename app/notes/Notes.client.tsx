@@ -1,4 +1,4 @@
-'use client'; // ОБОВ'ЯЗКОВО для клієнтського компонента
+'use client';
 
 import { useState } from 'react';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
@@ -10,14 +10,7 @@ import NoteModal from '@/components/NoteModal/NoteModal';
 import { fetchNotes, type FetchNotesResponse } from '@/lib/api';
 import { useDebounce } from 'use-debounce';
 
-// ✅ Видаляємо інтерфейс NotesClientProps, оскільки initialNotes більше не передається як пропс.
-// interface NotesClientProps {
-//   initialNotes: FetchNotesResponse;
-// }
-
-// ✅ Компонент більше не приймає пропси initialNotes.
 export default function NotesClient() {
-  // ✅ Змінено з ({ initialNotes }: NotesClientProps)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
@@ -25,19 +18,15 @@ export default function NotesClient() {
 
   const handleSearchChange = (newSearch: string) => {
     setSearch(newSearch);
-    setPage(1); // Скидаємо сторінку при зміні пошуку
+    setPage(1);
   };
 
   const { data, isLoading, error } = useQuery<FetchNotesResponse, Error>({
     queryKey: ['notes', debouncedSearch, page], // Ключ запиту (має відповідати prefetchQuery)
     queryFn: () => fetchNotes(debouncedSearch, page),
     placeholderData: keepPreviousData,
-    // ✅ Видаляємо initialData. React Query автоматично візьме дані з гідратованого кешу.
-    // initialData:
-    //   page === 1 && debouncedSearch === '' ? initialNotes : undefined,
   });
 
-  // Обробка станів завантаження та помилок
   if (isLoading) {
     return <p>Loading, please wait...</p>;
   }
